@@ -13,6 +13,9 @@ def home(request):
 # def homePage(request):
 #     return render(request, 'homepage.html')
 
+def bookdetails(request):
+    return render(request, 'bookingdetails.html')
+
 
 def book(request):
     if request.method=='POST':

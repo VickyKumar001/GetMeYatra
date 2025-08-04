@@ -228,4 +228,24 @@
     </div>
 </section>
 
+<script>
+    function handleSubmit() {
+        const from = document.getElementById('fromInput').value;
+        const to = document.getElementById('toInput').value;
+        const date = document.getElementById('dateInput').value;
+
+        if (!from || !to || !date) {
+            alert("Please fill all fields before submitting.");
+            return;
+        }
+
+        const queryString = `?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&date=${encodeURIComponent(date)}`;
+        window.location.href = `/bookdetails/${queryString}`;
+    }
+
+    // Attach submit handler
+    document.querySelector('.submit').addEventListener('click', handleSubmit);
+</script>
+
+
 {% endblock content %}

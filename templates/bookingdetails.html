@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="container1">
+    <div class="info-section">
+        <!-- Left: Image -->
+        <div class="left-column" style="flex: 1;">
+            <div class="slideshow">
+                <img id="slideshow-image" src="{% static 'Images/KhatuShyam1.jpg' %}" alt="Khatu Shyam Dham"
+                    class="detail-image" />
+            </div>
+        </div>
+
+
+        <!-- Right: Booking Form -->
+        <div class="right-column booking-form" style="flex: 1;">
+            <h2>Book This Trip</h2>
+            <form id="tripForm">
+                <!-- Row 1 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="from">From:</label>
+                        <input type="text" id="from" name="from" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="to">To:</label>
+                        <input type="text" id="to" name="to" readonly />
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="text" id="date" name="date" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="pickup">Pickup Point:</label>
+                        <select id="pickup" name="pickup" required>
+                            <option value="">-- Select Pickup Point --</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Gurgaon">Gurgaon</option>
+                            <option value="Jaipur">Jaipur</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" placeholder="your@example.com" required />
+                    </div>
+                </div>
+
+                <!-- Row 4 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Mobile Number:</label>
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. 9876543210" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="altPhone">Alternate Mobile Number:</label>
+                        <input type="tel" id="altPhone" name="altPhone" placeholder="e.g. 9876543211" />
+                    </div>
+                </div>
+
+                <!-- Row 5 -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="persons">How Many Persons:</label>
+                        <input type="number" id="persons" name="persons" min="1" placeholder="Number of travelers"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price Per Person (INR):</label>
+                        <input type="text" id="price" name="price" value="1999" readonly />
+                    </div>
+                </div>
+
+                <!-- Full width row -->
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1 1 100%;">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" placeholder="Enter your full address" rows="3"
+                            required></textarea>
+                    </div>
+                </div>
+
+                <!-- Total Price -->
+                <p id="total-price" style="margin-top: 10px; font-weight: bold;">Total Price: ₹1999</p>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit">Confirm Booking</button>
+            </form>
+
+
+        </div>
+    </div>
+
+    <div class="info">
+        <h2>Khatu Shyam Tour Overview</h2>
+        <p>
+            Join us on a divine pilgrimage to Khatu Shyamji, Salasar Balaji, and Rani Sati Mandir. This sacred
+            journey
+            includes
+            transportation, guided darshans, and all meals – breakfast, lunch, and dinner.
+            Our team ensures your comfort and spiritual fulfillment throughout the tour.
+        </p>
+
+        <p>
+            <strong>Duration:</strong> 2 Days, 1 Night <br />
+            <strong>Meals:</strong> Included <br />
+            <strong>Transportation:</strong> AC Cab (Private/Shared) <br />
+            <strong>Pickup:</strong> Delhi, Gurgaon, Jaipur <br />
+        </p>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" data-tab="itinerary">Itinerary</button>
+            <button class="tab" data-tab="inclusions">Inclusions</button>
+            <button class="tab" data-tab="exclusions">Exclusions</button>
+            <button class="tab" data-tab="note">Important Note</button>
+            <button class="tab" data-tab="hotel">Hotel Details</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="itinerary" class="tab-content active">
+            <h2>Day 1: Delhi to Agra - A Royal Welcome</h2>
+            <ul>
+                <li>Morning pickup from your desired location in Delhi.</li>
+                <li>Enjoy a scenic drive to Agra via the Yamuna Expressway.</li>
+                <li>Check-in to your comfortable hotel in Agra.</li>
+                <li>Afternoon: Visit the majestic Agra Fort, a UNESCO World Heritage Site, and delve into the
+                    history of
+                    Mughal emperors.</li>
+                <li>Evening: Explore the vibrant Sadar Bazaar, indulge in local delicacies like Agra's famous
+                    "Pethas," and
+                    witness the enchanting sunset from Mehtab Bagh overlooking the Taj Mahal.</li>
+                <li>Enjoy a delicious dinner at your hotel.</li>
+            </ul>
+
+            <hr />
+
+            <h2>Day 2: Taj Mahal & Fatehpur Sikri - A Day of Wonders</h2>
+            <ul>
+                <li>Early morning: Witness the ethereal beauty of the Taj Mahal, a masterpiece of Mughal
+                    architecture.</li>
+                <li>After the Taj Mahal, drive towards Jaipur.</li>
+                <li>En route: Visit the magnificent Fatehpur Sikri, a deserted Mughal city with stunning
+                    architecture,
+                    including the Buland Darwaza, Jama Masjid, and Panch Mahal.</li>
+            </ul>
+        </div>
+
+        <div id="inclusions" class="tab-content">
+            <h2>Inclusions</h2>
+            <ul>
+                <li>✔️ Includes 125 km and 5 hours</li>
+                <li>✔️ Driver Allowance</li>
+                <li>✔️ GST (5%)</li>
+            </ul>
+        </div>
+
+        <div id="exclusions" class="tab-content">
+            <h2>Exclusions</h2>
+            <ul>
+                <li>❌ After 125 km - Pay ₹ 16.00/km</li>
+                <li>❌ After 7 hr - Pay ₹ 100.00/hr</li>
+                <li>❌ Tolls, State Tax/Permit charges</li>
+                <li>❌ Parking/Airport Entry Charge</li>
+            </ul>
+        </div>
+
+        <div id="note" class="tab-content">
+            <h2>Important Note</h2>
+            <ul>
+                <li>Please carry valid ID proof for hotel check-in.</li>
+                <li>Itinerary may change based on local conditions or unforeseen events.</li>
+            </ul>
+        </div>
+
+        <div id="hotel" class="tab-content">
+            <h2>Hotel Details</h2>
+            <ul>
+                <li>Hotel in Agra: 3-star hotel with complimentary breakfast</li>
+                <li>Hotel in Jaipur: Heritage-style property with city view</li>
+            </ul>
+        </div>
+
+        <a href="index.html" class="back-btn">← Back to Packages</a>
+    </div>
+</div>
+
+<script>
+    // Toggle Menu
+    function toggleMenu() {
+        const nav = document.querySelector('.cta-buttons');
+        nav.classList.toggle('active');
+    }
+
+
+
+
+
+    // WhatsApp chat directly
+    function openWhatsAppChat() {
+        const message = "Hi, I'm interested in booking a cab";
+        const phone = "918965945602"; // Add country code without + sign
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const baseURL = isMobile
+            ? "https://api.whatsapp.com/send"
+            : "https://web.whatsapp.com/send";
+
+        const whatsappURL = `${baseURL}?phone=${phone}&text=${encodeURIComponent(message)}`;
+        window.open(whatsappURL, "_blank");
+    }
+
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.tab;
+
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+
+            tab.classList.add('active');
+            document.getElementById(target).classList.add('active');
+        });
+    });
+</script>
+<script>
+    const images = [
+        "{% static 'Images/KhatuShyam1.jpg' %}",
+        "{% static 'Images/CharDham.jpg' %}",
+        "{% static 'Images/DoDham.jpg' %}",
+        "{% static 'Images/Ujjain-mahakal-image.jpg' %}",
+    ];
+
+    let currentIndex = 0;
+    const slideshowImage = document.getElementById('slideshow-image');
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % images.length;
+        slideshowImage.src = images[currentIndex];
+    }, 2000); // change image every 1 second
+</script>
+
+<script>
+    const personsInput = document.getElementById("persons");
+    const totalPriceEl = document.getElementById("total-price");
+    const toInput = document.getElementById("to");
+    const priceInput = document.getElementById("price");
+
+    function getPricePerPerson(destination) {
+        switch (destination.toLowerCase()) {
+            case "khatu shyamji":
+                return 2000;
+            case "salasar balaji":
+                return 1600;
+            case "ujjain":
+                return 1500;
+            default:
+                return 1999; // default/fallback
+        }
+    }
+
+    function updatePrice() {
+        const destination = toInput.value.trim();
+        const count = parseInt(personsInput.value) || 0;
+        const pricePerPerson = getPricePerPerson(destination);
+
+        // Update price input field and total display
+        priceInput.value = pricePerPerson;
+        totalPriceEl.textContent = "Total Price: ₹" + (pricePerPerson * count);
+    }
+
+    // When destination changes (if editable) or on page load
+    toInput.addEventListener("input", updatePrice);
+    personsInput.addEventListener("input", updatePrice);
+
+    // On page load, in case destination is prefilled
+    window.addEventListener("DOMContentLoaded", updatePrice);
+
+    // Optional: handle form submission
+    document.getElementById("tripForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        alert("Booking confirmed!");
+    });
+</script>
+
+
+<script>
+    // Read query params and prefill the form
+    const params = new URLSearchParams(window.location.search);
+
+    document.getElementById('from').value = params.get('from') || '';
+    document.getElementById('to').value = params.get('to') || '';
+    document.getElementById('date').value = params.get('date') || '';
+
+    // Handle form submission (just a placeholder)
+    document.getElementById('tripForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        alert('Booking confirmed!');
+    });
+</script>
+
+{% endblock content %}}
