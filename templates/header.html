@@ -567,7 +567,7 @@
   <nav class="navbar navbar-expand-lg" id="navbar">
     <div class="container">
       <img class="logo" src="{% static 'Images/logo1.png' %}" alt="">
-      <a class="navbar-brand" href="{% url 'homePage' %}" id="logo"><span>J</span>ourneyQuest</a>
+      <a class="navbar-brand" href="{% url 'home' %}" id="logo"><span>J</span>ourneyQuest</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
         <span><i class="fa-solid fa-bars"></i></span>
       </button>
@@ -575,7 +575,7 @@
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/homePage/' %}active{% endif %}"
-              href="{% url 'homePage' %}">Home</a>
+              href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link {% if request.path == '/book/' %}active{% endif %}" href="{% url 'book' %}">Book</a>

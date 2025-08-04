@@ -7,11 +7,11 @@ from .models import Book
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html')
-
-
-def homePage(request):
     return render(request, 'homepage.html')
+
+
+# def homePage(request):
+#     return render(request, 'homepage.html')
 
 
 def book(request):
@@ -54,7 +54,7 @@ def loginpage(request):
         user=authenticate(request, username=username, password=pass1)
         if user is not None:
             login(request,user)
-            return redirect('homePage')
+            return redirect('home')
         else:
             return HttpResponse("Username or Password in incorrect!!")
     return render(request, 'login.html')
