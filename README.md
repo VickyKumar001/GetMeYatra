@@ -1,2 +1,0 @@
-# GetMeYatra
-# GetMeYatra1
