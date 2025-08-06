@@ -1,23 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 <div class="container1">
+    <section class="about" id="about"></section>
+
     <div class="info-section">
-        <!-- Left: Image -->
+        <!-- Left: Image & Destination Overview -->
         <div class="left-column" style="flex: 1;">
-            <div class="slideshow">
-                <img id="slideshow-image" src="{% static 'Images/KhatuShyam1.jpg' %}" alt="Khatu Shyam Dham"
-                    class="detail-image" />
+            <div class="slideshow" id="destination-overview" style="display: none;">
+                <img id="destination-image" src="" alt="Tour Image" class="detail-image" />
+                <h2 id="destination-heading"></h2>
+                <p id="destination-description"></p>
+                <p id="destination-details"></p>
             </div>
         </div>
-
 
         <!-- Right: Booking Form -->
         <div class="right-column booking-form" style="flex: 1;">
             <h2>Book This Trip</h2>
-            <form id="tripForm">
+            <form id="tripForm" method="POST" action="{% url 'book_trip' %}">
+                {% csrf_token %}
+
                 <!-- Row 1 -->
                 <div class="form-row">
                     <div class="form-group">
@@ -63,11 +67,13 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="phone">Mobile Number:</label>
-                        <input type="tel" id="phone" name="phone" placeholder="e.g. 9876543210" required />
+                        <input type="tel" id="phone" name="phone" placeholder="e.g. 9876543210" pattern="[0-9]{10}"
+                            maxlength="10" required />
                     </div>
                     <div class="form-group">
                         <label for="altPhone">Alternate Mobile Number:</label>
-                        <input type="tel" id="altPhone" name="altPhone" placeholder="e.g. 9876543211" />
+                        <input type="tel" id="altPhone" name="altPhone" placeholder="e.g. 9876543211"
+                            pattern="[0-9]{10}" maxlength="10" required />
                     </div>
                 </div>
 
@@ -84,35 +90,17 @@
                     </div>
                 </div>
 
-
                 <!-- Total Price -->
                 <p id="total-price" style="margin-top: 10px; font-weight: bold;">Total Price: ₹1999</p>
 
                 <!-- Submit Button -->
                 <button type="submit" class="submit">Confirm Booking</button>
             </form>
-
-
         </div>
     </div>
 
+    <!-- ✅ Tabs Section -->
     <div class="info">
-        <h2>Khatu Shyam Tour Overview</h2>
-        <p>
-            Join us on a divine pilgrimage to Khatu Shyamji, Salasar Balaji, and Rani Sati Mandir. This sacred
-            journey
-            includes
-            transportation, guided darshans, and all meals – breakfast, lunch, and dinner.
-            Our team ensures your comfort and spiritual fulfillment throughout the tour.
-        </p>
-
-        <p>
-            <strong>Duration:</strong> 2 Days, 1 Night <br />
-            <strong>Meals:</strong> Included <br />
-            <strong>Transportation:</strong> AC Cab (Private/Shared) <br />
-            <strong>Pickup:</strong> Delhi, Gurgaon, Jaipur <br />
-        </p>
-
         <!-- Tabs -->
         <div class="tabs">
             <button class="tab active" data-tab="itinerary">Itinerary</button>
@@ -129,25 +117,17 @@
                 <li>Morning pickup from your desired location in Delhi.</li>
                 <li>Enjoy a scenic drive to Agra via the Yamuna Expressway.</li>
                 <li>Check-in to your comfortable hotel in Agra.</li>
-                <li>Afternoon: Visit the majestic Agra Fort, a UNESCO World Heritage Site, and delve into the
-                    history of
-                    Mughal emperors.</li>
-                <li>Evening: Explore the vibrant Sadar Bazaar, indulge in local delicacies like Agra's famous
-                    "Pethas," and
-                    witness the enchanting sunset from Mehtab Bagh overlooking the Taj Mahal.</li>
-                <li>Enjoy a delicious dinner at your hotel.</li>
+                <li>Visit Agra Fort, Sadar Bazaar, and Mehtab Bagh.</li>
+                <li>Dinner at your hotel.</li>
             </ul>
 
             <hr />
 
-            <h2>Day 2: Taj Mahal & Fatehpur Sikri - A Day of Wonders</h2>
+            <h2>Day 2: Taj Mahal & Fatehpur Sikri</h2>
             <ul>
-                <li>Early morning: Witness the ethereal beauty of the Taj Mahal, a masterpiece of Mughal
-                    architecture.</li>
-                <li>After the Taj Mahal, drive towards Jaipur.</li>
-                <li>En route: Visit the magnificent Fatehpur Sikri, a deserted Mughal city with stunning
-                    architecture,
-                    including the Buland Darwaza, Jama Masjid, and Panch Mahal.</li>
+                <li>Early morning visit to the Taj Mahal.</li>
+                <li>Drive towards Jaipur.</li>
+                <li>Visit Fatehpur Sikri on the way.</li>
             </ul>
         </div>
 
@@ -163,8 +143,8 @@
         <div id="exclusions" class="tab-content">
             <h2>Exclusions</h2>
             <ul>
-                <li>❌ After 125 km - Pay ₹ 16.00/km</li>
-                <li>❌ After 7 hr - Pay ₹ 100.00/hr</li>
+                <li>❌ After 125 km - Pay ₹16.00/km</li>
+                <li>❌ After 7 hr - Pay ₹100.00/hr</li>
                 <li>❌ Tolls, State Tax/Permit charges</li>
                 <li>❌ Parking/Airport Entry Charge</li>
             </ul>
@@ -173,136 +153,118 @@
         <div id="note" class="tab-content">
             <h2>Important Note</h2>
             <ul>
-                <li>Please carry valid ID proof for hotel check-in.</li>
-                <li>Itinerary may change based on local conditions or unforeseen events.</li>
+                <li>Carry valid ID proof for hotel check-in.</li>
+                <li>Itinerary may change based on local conditions.</li>
             </ul>
         </div>
 
         <div id="hotel" class="tab-content">
             <h2>Hotel Details</h2>
             <ul>
-                <li>Hotel in Agra: 3-star hotel with complimentary breakfast</li>
-                <li>Hotel in Jaipur: Heritage-style property with city view</li>
+                <li>Hotel in Agra: 3-star hotel with breakfast</li>
+                <li>Hotel in Jaipur: Heritage-style property</li>
             </ul>
         </div>
-
-        <a href="index.html" class="back-btn">← Back to Packages</a>
     </div>
 </div>
 
+<!-- ✅ JavaScript for Tabs & Destination Logic -->
 <script>
-    // Toggle Menu
-    function toggleMenu() {
-        const nav = document.querySelector('.cta-buttons');
-        nav.classList.toggle('active');
-    }
+    window.addEventListener("DOMContentLoaded", function () {
+        const params = new URLSearchParams(window.location.search);
+        const from = params.get("from") || "";
+        const to = params.get("to") || "";
+        const date = params.get("date") || "";
+
+        document.getElementById("from").value = from;
+        document.getElementById("to").value = to;
+        document.getElementById("date").value = date;
+
+        const personsInput = document.getElementById("persons");
+        const priceInput = document.getElementById("price");
+        const totalPriceEl = document.getElementById("total-price");
+        personsInput.value = 1;
+
+        function getPricePerPerson(destination) {
+            switch (destination.toLowerCase()) {
+                case "khatu shyamji": return 2000;
+                case "salasar balaji": return 1600;
+                case "ujjain": return 1500;
+                default: return 1999;
+            }
+        }
+
+        function updatePrice() {
+            const destination = to.trim().toLowerCase();
+            const count = parseInt(personsInput.value) || 0;
+            const pricePerPerson = getPricePerPerson(destination);
+            priceInput.value = pricePerPerson;
+            totalPriceEl.textContent = "Total Price: ₹" + (pricePerPerson * count);
+        }
+
+        personsInput.addEventListener("input", updatePrice);
+        updatePrice();
+
+        const destination = to.trim().toLowerCase();
+        const overview = document.getElementById("destination-overview");
+        const image = document.getElementById("destination-image");
+        const heading = document.getElementById("destination-heading");
+        const description = document.getElementById("destination-description");
+        const details = document.getElementById("destination-details");
+
+        if (destination === "khatu shyamji") {
+            overview.style.display = "block";
+            image.src = "{% static 'Images/KhatuShyam1.jpg' %}";
+            heading.textContent = "Khatu Shyam Tour Overview";
+            description.textContent = `Join us on a divine pilgrimage to Khatu Shyamji, Salasar Balaji, and Rani Sati Mandir. 
+        This sacred journey includes transportation, guided darshans, and all meals – breakfast, lunch, and dinner. 
+        Our team ensures your comfort and spiritual fulfillment throughout the tour.`;
+            details.innerHTML = `
+        <strong>Duration:</strong> 2 Days, 1 Night <br/>
+        <strong>Meals:</strong> Included <br/>
+        <strong>Transportation:</strong> AC Cab <br/>
+        <strong>Pickup:</strong> Delhi, Gurgaon, Jaipur <br/>
+    `;
+        } else if (destination === "salasar balaji") {
+            overview.style.display = "block";
+            image.src = "{% static 'Images/SalasarBalaji.jpg' %}";
+            heading.textContent = "Salasar Balaji Tour Overview";
+            description.textContent = `Experience a soul-enriching journey to Salasar Balaji and nearby temples. 
+        This spiritual tour includes comfortable travel, traditional meals, and personal time for darshan and prayers.`;
+            details.innerHTML = `
+        <strong>Duration:</strong> 1 Day <br/>
+        <strong>Meals:</strong> Breakfast & Lunch <br/>
+        <strong>Transportation:</strong> AC Cab <br/>
+        <strong>Pickup:</strong> Delhi, Jaipur <br/>
+    `;
+        } else if (destination === "ujjain") {
+            overview.style.display = "block";
+            image.src = "{% static 'Images/Ujjain-mahakal-image.jpg' %}";
+            heading.textContent = "Ujjain Mahakal Tour Overview";
+            description.textContent = `Embark on a sacred journey to Ujjain, the city of Lord Mahakaleshwar. 
+        Enjoy a peaceful darshan experience with guided tours, temple visits, and meals included.`;
+            details.innerHTML = `
+        <strong>Duration:</strong> 2 Days, 1 Night <br/>
+        <strong>Meals:</strong> Breakfast & Dinner <br/>
+        <strong>Transportation:</strong> Train + AC Cab <br/>
+        <strong>Pickup:</strong> Delhi, Indore <br/>
+    `;
+        }
 
 
 
+        // Tab functionality
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
 
-
-    // WhatsApp chat directly
-    function openWhatsAppChat() {
-        const message = "Hi, I'm interested in booking a cab";
-        const phone = "918965945602"; // Add country code without + sign
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        const baseURL = isMobile
-            ? "https://api.whatsapp.com/send"
-            : "https://web.whatsapp.com/send";
-
-        const whatsappURL = `${baseURL}?phone=${phone}&text=${encodeURIComponent(message)}`;
-        window.open(whatsappURL, "_blank");
-    }
-
-    const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.tab-content');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const target = tab.dataset.tab;
-
-            tabs.forEach(t => t.classList.remove('active'));
-            contents.forEach(c => c.classList.remove('active'));
-
-            tab.classList.add('active');
-            document.getElementById(target).classList.add('active');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
         });
     });
 </script>
-<script>
-    const images = [
-        "{% static 'Images/KhatuShyam1.jpg' %}",
-        "{% static 'Images/CharDham.jpg' %}",
-        "{% static 'Images/DoDham.jpg' %}",
-        "{% static 'Images/Ujjain-mahakal-image.jpg' %}",
-    ];
-
-    let currentIndex = 0;
-    const slideshowImage = document.getElementById('slideshow-image');
-
-    setInterval(() => {
-        currentIndex = (currentIndex + 1) % images.length;
-        slideshowImage.src = images[currentIndex];
-    }, 2000); // change image every 1 second
-</script>
-
-<script>
-    const personsInput = document.getElementById("persons");
-    const totalPriceEl = document.getElementById("total-price");
-    const toInput = document.getElementById("to");
-    const priceInput = document.getElementById("price");
-
-    function getPricePerPerson(destination) {
-        switch (destination.toLowerCase()) {
-            case "khatu shyamji":
-                return 2000;
-            case "salasar balaji":
-                return 1600;
-            case "ujjain":
-                return 1500;
-            default:
-                return 1999; // default/fallback
-        }
-    }
-
-    function updatePrice() {
-        const destination = toInput.value.trim();
-        const count = parseInt(personsInput.value) || 0;
-        const pricePerPerson = getPricePerPerson(destination);
-
-        // Update price input field and total display
-        priceInput.value = pricePerPerson;
-        totalPriceEl.textContent = "Total Price: ₹" + (pricePerPerson * count);
-    }
-
-    // When destination changes (if editable) or on page load
-    toInput.addEventListener("input", updatePrice);
-    personsInput.addEventListener("input", updatePrice);
-
-    // On page load, in case destination is prefilled
-    window.addEventListener("DOMContentLoaded", updatePrice);
-
-    // Optional: handle form submission
-    document.getElementById("tripForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-        alert("Booking confirmed!");
-    });
-</script>
-
-
-<script>
-    // Read query params and prefill the form
-    const params = new URLSearchParams(window.location.search);
-
-    document.getElementById('from').value = params.get('from') || '';
-    document.getElementById('to').value = params.get('to') || '';
-    document.getElementById('date').value = params.get('date') || '';
-
-    // Handle form submission (just a placeholder)
-    document.getElementById('tripForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        alert('Booking confirmed!');
-    });
-</script>
-
-{% endblock content %}}
+{% endblock content %}

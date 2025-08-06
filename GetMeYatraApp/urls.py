@@ -18,6 +18,7 @@ Including another URLconf
 from django.urls import path
 from django.conf.urls.static import static
 from .views import *
+from . import views
 
 urlpatterns = [
     path('', home, name='home'),
@@ -30,4 +31,12 @@ urlpatterns = [
     path('gallery/', gallery, name='gallery'),
     path('service/', service, name='service'),
     path('package/', package, name='package'),
+    path('khatushyamdetail/', khatushyam, name='khatushyam'),
+    path('dodhamdetail/', dodham, name='dodham'),
+    path('ekdhamdetail/', ekdham, name='ekdham'),
+    path('chardhamdetail/', chardham, name='chardham',),
+    path('vrindavandetail/', vrindavan, name='vrindavan'),
+    path('ujjaindetail/', ujjain, name='ujjain'),
+    path('book-trip/', views.book_trip, name='book_trip'),
+    path('booking-success/', views.booking_success, name='booking_success'),
 ]

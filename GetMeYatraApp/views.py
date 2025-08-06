@@ -2,7 +2,8 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required 
-from .models import Book
+from .models import Book, TripBooking
+from datetime import datetime
 
 # Create your views here.
 
@@ -15,6 +16,81 @@ def home(request):
 
 def bookdetails(request):
     return render(request, 'bookingdetails.html')
+
+def khatushyam(request):
+    return render(request, 'khatushyamdetail.html')
+
+def dodham(request):
+    return render(request, 'dodhamdetail.html')
+
+def ekdham(request):
+    return render(request, 'ekdhamdetail.html')
+
+def chardham(request):
+    return render(request, 'chardhamdetail.html')
+
+def vrindavan(request):
+    return render(request, 'vrindavandetail.html')
+
+def ujjain(request):
+    return render(request, 'ujjaindetail.html')
+
+
+
+
+
+
+def book_trip(request):
+    if request.method == 'POST':
+        from_location = request.POST.get('from')
+        to_location = request.POST.get('to')
+        date_str = request.POST.get('date')  
+        pickup_point = request.POST.get('pickup')
+        full_name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        alt_phone = request.POST.get('altPhone')
+        persons = int(request.POST.get('persons'))
+        price_per_person = float(request.POST.get('price'))
+        total_price = persons * price_per_person
+
+        # Convert date from DD-MM-YYYY to a Python date object
+        if date_str:
+            try:
+                date = datetime.strptime(date_str, "%d-%m-%Y").date()
+            except ValueError:
+                # Handle invalid date format
+                return render(request, 'book_trip.html', {
+                    'error': 'Invalid date format. Please select a valid date.'
+                })
+        else:
+            # No date selected
+            return render(request, 'book_trip.html', {
+                'error': 'Please select a date.'
+            })
+
+       
+        TripBooking.objects.create(
+            from_location=from_location,
+            to_location=to_location,
+            date=date,
+            pickup_point=pickup_point,
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            alt_phone=alt_phone,
+            persons=persons,
+            price_per_person=price_per_person,
+            total_price=total_price
+        )
+
+        return redirect('booking_success')
+
+    return render(request, 'bookingdetials.html')
+
+
+def booking_success(request):
+    return render(request, 'booking_success.html')
 
 
 def book(request):
